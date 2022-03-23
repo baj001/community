@@ -94,17 +94,18 @@ public class UserService implements CommunityConstant {
 
         // 激活邮件
         Context context = new Context();
-        //首先要直到给谁发邮件，使用user.getEmail 来获取
+        //首先要知道给谁发邮件，使用user.getEmail 来获取
         context.setVariable("email", user.getEmail());
         // http://localhost:8080/community/activation/101/code
         /**
          * 使用如下的方式将url拼接出来
          * domain 是community.path.domain=http://localhost:8080
          * contextPath 是  server.servlet.context-path=/community
+         * 生成的URL 即是一会邮件中点击此链接跳转的位置
          */
         String url = domain + contextPath + "/activation/" + user.getId() + "/" + user.getActivationCode();
         context.setVariable("url", url);
-        //利用模板引擎来生成内容
+        //利用模板引擎来生成内容  在此处将activation.thml文件传入，则发送的邮件显示的内容就是这个HTML的内容
         String content = templateEngine.process("/mail/activation", context);
         //调用邮件客户端 来 发送邮件
         mailClient.sendMail(user.getEmail(), "激活账号", content);

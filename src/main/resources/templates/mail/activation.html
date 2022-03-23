@@ -14,7 +14,15 @@
 		您正在注册牛客网, 这是一封激活邮件, 请点击
 		<a th:href="${url}">此链接</a>,
 		激活您的牛客账号!
+	<!--点击这个链接后，会跳转到 operate-result.html-->
 	</p>
 </div>
 </body>
 </html>
+
+
+<!--
+在UserService 中
+		//利用模板引擎来生成内容  在此处将activation.thml文件传入，则发送的邮件显示的内容就是这个HTML的内容
+        String content = templateEngine.process("/mail/activation", context);
+-->
