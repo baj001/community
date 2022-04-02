@@ -6,11 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * @author baj
- * @creat 2022-03-19 16:44
- */
-
 @Mapper
 public interface DiscussPostMapper {
 
@@ -23,5 +18,7 @@ public interface DiscussPostMapper {
     int insertDiscussPost(DiscussPost discussPost);
 
     DiscussPost selectDiscussPostById(int id);
+
+    int updateCommentCount(int id, int commentCount);
 
 }
