@@ -21,7 +21,7 @@ public class LikeService {
             public Object execute(RedisOperations operations) throws DataAccessException {
                 String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
                 String userLikeKey = RedisKeyUtil.getUserLikeKey(entityUserId);
-
+                //将是否点赞 的 结果用isMember来保存
                 boolean isMember = operations.opsForSet().isMember(entityLikeKey, userId);
 
                 operations.multi();
@@ -40,6 +40,7 @@ public class LikeService {
     }
 
     // 查询某实体点赞的数量
+    // 此处的实体指的是 某人发布的帖子，用户给帖子点赞，即为用户给某个实体点赞
     public long findEntityLikeCount(int entityType, int entityId) {
         String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
         return redisTemplate.opsForSet().size(entityLikeKey);
@@ -48,10 +49,11 @@ public class LikeService {
     // 查询某人对某实体的点赞状态
     public int findEntityLikeStatus(int userId, int entityType, int entityId) {
         String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
+        //检测是否存在某个点赞产生的字符串
         return redisTemplate.opsForSet().isMember(entityLikeKey, userId) ? 1 : 0;
     }
 
-    // 查询某个用户获得的赞
+    // 查询某个用户获得的赞  此处调用getUserLikeKey 来获取当前的key，然后通过redis来获取对应的value
     public int findUserLikeCount(int userId) {
         String userLikeKey = RedisKeyUtil.getUserLikeKey(userId);
         Integer count = (Integer) redisTemplate.opsForValue().get(userLikeKey);

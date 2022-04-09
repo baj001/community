@@ -25,6 +25,7 @@ public class LikeController {
     @RequestMapping(path = "/like", method = RequestMethod.POST)
     @ResponseBody
     public String like(int entityType, int entityId, int entityUserId) {
+        //获取当前的用户
         User user = hostHolder.getUser();
 
         // 点赞
@@ -34,7 +35,7 @@ public class LikeController {
         long likeCount = likeService.findEntityLikeCount(entityType, entityId);
         // 状态
         int likeStatus = likeService.findEntityLikeStatus(user.getId(), entityType, entityId);
-        // 返回的结果
+        // 返回的结果 封装在map中返回
         Map<String, Object> map = new HashMap<>();
         map.put("likeCount", likeCount);
         map.put("likeStatus", likeStatus);

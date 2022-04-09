@@ -28,6 +28,7 @@ public class FollowService implements CommunityConstant {
                 String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
                 String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
 
+                //启动事务
                 operations.multi();
 
                 operations.opsForZSet().add(followeeKey, entityId, System.currentTimeMillis());

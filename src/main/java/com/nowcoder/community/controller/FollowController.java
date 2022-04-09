@@ -80,6 +80,7 @@ public class FollowController implements CommunityConstant {
         if (user == null) {
             throw new RuntimeException("该用户不存在!");
         }
+
         model.addAttribute("user", user);
 
         page.setLimit(5);
