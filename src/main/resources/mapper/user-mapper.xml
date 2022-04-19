@@ -12,9 +12,6 @@
         id, username, password, salt, email, type, status, activation_code, header_url, create_time
     </sql>
 
-<!--    其中 select <include refid="selectFields"></include>
-        即相当于select id, username, password, salt ......,create_time
- -->
     <select id="selectById" resultType="User">
         select <include refid="selectFields"></include>
         from user
